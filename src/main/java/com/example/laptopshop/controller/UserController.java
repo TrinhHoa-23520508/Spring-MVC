@@ -1,15 +1,12 @@
 package com.example.laptopshop.controller;
 
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
 import com.example.laptopshop.domain.User;
-import com.example.laptopshop.repository.UserRepository;
 import com.example.laptopshop.service.UserService;
 
 
@@ -24,7 +21,8 @@ public class UserController {
     @RequestMapping("/")
     public String HomePage(Model model){
       
-        
+        List<User> users = this.userService.getAllUsersByEmail("trinhhoa.gl2005@gmail.com");
+        System.out.println(users);
         return "hello";
     }
     @RequestMapping("/admin/user")
