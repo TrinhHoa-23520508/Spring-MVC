@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User</title>
+    <title>Update User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
@@ -19,17 +19,17 @@
           <div class="container mt-5">
            <div class="row">
             <div class="col-md-6 col-12 mx-auto">
-                <h3>Create a user</h3>
+                <h3>Update a user</h3>
                 <hr/>
-                <form:form action="/admin/user/create" method="post" modelAttribute="newUser">
-                    <div class="mb-3">
+                <form:form action="/admin/user/update" method="post" modelAttribute="user">
+                    <div class="mb-3 " hidden>
+                        <label class="form-label ">ID</label>
+                        <form:input type="text" path="id"  class="form-control" />
+                      </div>    
+                <div class="mb-3" >
                       <label class="form-label">Email</label>
-                      <form:input type="email" path="email" class="form-control" />
+                      <form:input type="email" path="email" class="form-control" disabled="true"/>
                      
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Password</label>
-                      <form:input type="password" path="password"  class="form-control" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Phone Number</label>
@@ -44,8 +44,10 @@
                         <form:input  type="text" path="address"  class="form-control"/>
                       </div>
                 
-                    <button type="submit" class="btn btn-primary">Create</button>
+                      <button type="submit" class="btn btn-warning">Update</button>
+                    
                   </form:form>
+                 
             </div>
            </div>
           </div>
