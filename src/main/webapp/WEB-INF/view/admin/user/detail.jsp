@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="HoaSatoru - Dự án laptopshop" />
         <meta name="author" content="HoaSatoru" />
-        <title>Delete user ${user.id}</title>
+        <title>Detail user ${user.id}</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -26,26 +26,30 @@
               <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item "><a href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item "><a href="/admin/user">Users</a></li>
-                <li class="breadcrumb-item active">Delete</li>
+                <li class="breadcrumb-item active">Detail</li>
               </ol>
               <div class="row">
-                <div class="col-12 ">
-                <h2>Delete the user with id = ${user.id}</h2>
-                <hr/>
-                <div class="alert alert-danger" role="alert">
-                    Are you sure to delete this user!
-                  </div>
-                    <form:form action="/admin/user/delete" method="post" modelAttribute="user">
-                        <input type="hidden" name="id" value="${user.id}"/>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <a href="/admin/user" class="btn btn-success">Back</a>
-                    </form:form>
+                <div class="col-6 mx-auto">
+                <h2>Detail user with id = ${user.id}</h2>
+              <hr />
+              <div class="card" style="width: 60%;">
+                <div class="card-header">
+                  User information
                 </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">ID: ${user.id}</li>
+                  <li class="list-group-item">Email: ${user.email}</li>
+                  <li class="list-group-item">FullName: ${user.fullName}</li>
+                  <li class="list-group-item">Address: ${user.address}</li>
+                </ul>
+              </div>
+              <a href="/admin/user" class="btn btn-success mt-3">Back</a>
 
               </div>
             </div>
-            <jsp:include page="../layout/footer.jsp" />
+            
           </div>
+          <jsp:include page="../layout/footer.jsp" />
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
           crossorigin="anonymous"></script>

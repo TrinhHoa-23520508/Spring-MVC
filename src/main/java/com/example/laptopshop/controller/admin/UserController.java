@@ -1,4 +1,4 @@
-package com.example.laptopshop.controller;
+package com.example.laptopshop.controller.admin;
 
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class UserController {
     public String getUserPage(Model model){
         List<User> users = this.userService.getAllUsers();
         model.addAttribute("users", users);
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
     @RequestMapping("/admin/user/create")
     public String getCreateUserPage(Model model){
@@ -43,7 +43,7 @@ public class UserController {
     public String getCreateUserPage(Model model, @PathVariable long id){
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
-        return "admin/user/show";
+        return "admin/user/detail";
     }
     @RequestMapping(value="/admin/user/create",method=RequestMethod.POST)
     public String createUserPage(Model model, @ModelAttribute("newUser")User newUser){
