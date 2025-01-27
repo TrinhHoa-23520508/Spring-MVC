@@ -25,12 +25,24 @@ public class User {
      private String fullName;
      private String address;
      private String phone;
-     private String avata;
+     private String avatar;
      //roleid long;
      @ManyToOne
      @JoinColumn(name="role_id")
      private Role role;
-     @OneToMany(mappedBy="user")
+     public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    public List<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+    @OneToMany(mappedBy="user")
      private List<Order> orders;
     public long getId() {
         return id;
@@ -68,16 +80,16 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public String getAvata() {
-        return avata;
+    public String getAvatar() {
+        return avatar;
     }
-    public void setAvata(String avata) {
-        this.avata = avata;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     @Override
     public String toString() {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", phone=" + phone + ", avata=" + avata + "]";
+                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
    
      

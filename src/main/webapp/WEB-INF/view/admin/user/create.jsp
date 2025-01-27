@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="HoaSatoru - Dự án laptopshop" />
         <meta name="author" content="HoaSatoru" />
-        <title>Dashboard - HoaSatoru</title>
+        <title>Create user</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -46,7 +46,8 @@
                 <div class="col-6 mx-auto">
                   <h3>Create a user</h3>
                   <hr />
-                  <form:form action="/admin/user/create" method="post" modelAttribute="newUser" class="row">
+                  <form:form action="/admin/user/create" method="post" modelAttribute="newUser" class="row"
+                  enctype="multipart/form-data">
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Email</label>
                       <form:input type="email" path="email" class="form-control" />
@@ -70,18 +71,16 @@
                     </div>
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Role</label>
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected>ADMIN</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <form:select class="form-select" aria-label="Default select example" path="role.name">
+                        <form:option value="ADMIN">ADMIN</form:option>
+                        <form:option value="USER">USER</form:option>
+                      </form:select>
                     </div>
                     <div class="mb-3 col-12 col-md-6">
 
 
                       <label for="avatarFile" class="form-label">Avatar: </label>
-                      <input class="form-control" type="file" id="avatarFile" accept=".ipg, .png, .jpeg">
+                      <input class="form-control" type="file" id="avatarFile" accept=".jpg, .png, .jpeg" name="avatarFile">
 
                     </div>
                     <div class="mb-3 col-12">

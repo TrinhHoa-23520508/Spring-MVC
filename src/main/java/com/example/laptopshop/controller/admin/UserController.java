@@ -3,23 +3,27 @@ package com.example.laptopshop.controller.admin;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.laptopshop.domain.User;
 import com.example.laptopshop.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import com.example.laptopshop.service.UploadFileService;
 
 
 @Controller
 public class UserController {
         private final UserService userService;
+        private final UploadFileService uploadFileService;
      
-    public UserController(UserService userService ){ 
+    public UserController(UserService userService, UploadFileService uploadFileService) { 
         this.userService = userService;
+        this.uploadFileService = uploadFileService;
     }
 
     @RequestMapping("/")
@@ -34,7 +38,7 @@ public class UserController {
         model.addAttribute("users", users);
         return "admin/user/show";
     }
-    @RequestMapping("/admin/user/create")
+    @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model){
         model.addAttribute("newUser", new User());
         return "admin/user/create";
@@ -45,10 +49,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "admin/user/detail";
     }
-    @RequestMapping(value="/admin/user/create",method=RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser")User newUser){
-        System.out.println("run here"+ newUser);
-        this.userService.handleSaveUser(newUser);
+    @PostMapping("/admin/user/create")
+    public String createUserPage(Model model, @ModelAttribute("newUser")User newUser, @RequestParam("avatarFile") MultipartFile file){
+     
+       String fileName = this.uploadFileService.handleUploadFile(file, "avatar");
+       System.out.println(fileName);
         return "redirect:/admin/user";
     }
     @RequestMapping("/admin/user/update/{id}")
