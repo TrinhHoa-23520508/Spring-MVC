@@ -1,6 +1,8 @@
 package com.example.laptopshop.controller.admin;
 
 import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.laptopshop.domain.User;
 import com.example.laptopshop.service.UserService;
+
+
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.laptopshop.service.UploadFileService;
 
@@ -20,10 +24,12 @@ import com.example.laptopshop.service.UploadFileService;
 public class UserController {
         private final UserService userService;
         private final UploadFileService uploadFileService;
+        private final PasswordEncoder passwordEncoder;
      
-    public UserController(UserService userService, UploadFileService uploadFileService) { 
-        this.userService = userService;
+    public UserController(UserService userService, UploadFileService uploadFileService, PasswordEncoder passwordEncoder) {  
+          this.userService = userService;
         this.uploadFileService = uploadFileService;
+       this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping("/")
@@ -52,8 +58,12 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String createUserPage(Model model, @ModelAttribute("newUser")User newUser, @RequestParam("avatarFile") MultipartFile file){
      
-       String fileName = this.uploadFileService.handleUploadFile(file, "avatar");
-       System.out.println(fileName);
+       String avatar = this.uploadFileService.handleUploadFile(file, "avatar");
+       String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
+       newUser.setRole(this.userService.getRoleByName(newUser.getRole().getName()));
+       newUser.setAvatar(avatar);
+       newUser.setPassword(hashPassword);
+         this.userService.handleSaveUser(newUser); 
         return "redirect:/admin/user";
     }
     @RequestMapping("/admin/user/update/{id}")
