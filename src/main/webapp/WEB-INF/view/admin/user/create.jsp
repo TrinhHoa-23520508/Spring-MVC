@@ -49,28 +49,28 @@
                   <form:form action="/admin/user/create" method="post" modelAttribute="newUser" class="row"
                   enctype="multipart/form-data">
                     <div class="mb-3 col-12 col-md-6">
-                      <label class="form-label">Email</label>
+                      <label class="form-label">Email:</label>
                       <form:input type="email" path="email" class="form-control" />
 
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                      <label class="form-label">Password</label>
+                      <label class="form-label">Password:</label>
                       <form:input type="password" path="password" class="form-control" />
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                      <label class="form-label">Phone Number</label>
+                      <label class="form-label">Phone Number:</label>
                       <form:input type="text" path="phone" class="form-control" />
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                      <label class="form-label">Full Name</label>
+                      <label class="form-label">Full Name:</label>
                       <form:input type="text" path="fullName" class="form-control" />
                     </div>
                     <div class="mb-3 col-12">
-                      <label class="form-label">Address</label>
+                      <label class="form-label">Address:</label>
                       <form:input type="text" path="address" class="form-control" />
                     </div>
                     <div class="mb-3 col-12 col-md-6">
-                      <label class="form-label">Role</label>
+                      <label class="form-label">Role:</label>
                       <form:select class="form-select" aria-label="Default select example" path="role.name">
                         <form:option value="ADMIN">ADMIN</form:option>
                         <form:option value="USER">USER</form:option>

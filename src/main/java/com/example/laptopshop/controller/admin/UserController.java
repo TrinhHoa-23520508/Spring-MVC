@@ -45,13 +45,13 @@ public class UserController {
         return "admin/user/create";
     }
     @RequestMapping("/admin/user/{id}")
-    public String getCreateUserPage(Model model, @PathVariable long id){
+    public String getViewUserPage(Model model, @PathVariable long id){
         User user = this.userService.getUserById(id);
         model.addAttribute("user", user);
         return "admin/user/detail";
     }
     @PostMapping("/admin/user/create")
-    public String createUserPage(Model model, @ModelAttribute("newUser")User newUser, @RequestParam("avatarFile") MultipartFile file){
+    public String postCreateUser(Model model, @ModelAttribute("newUser")User newUser, @RequestParam("avatarFile") MultipartFile file){
      
        String avatar = this.uploadFileService.handleUploadFile(file, "avatar");
        String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
