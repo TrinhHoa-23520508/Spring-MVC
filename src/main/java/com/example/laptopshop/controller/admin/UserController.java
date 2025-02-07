@@ -58,16 +58,19 @@ public class UserController {
     @PostMapping("/admin/user/create")
     public String postCreateUser(Model model,
             @ModelAttribute("newUser") @Valid User newUser,
-            BindingResult bindingResultUser,
+            BindingResult newUserBindingResult,
             @RequestParam("avatarFile") MultipartFile file) {
-        if (bindingResultUser.hasErrors()) {
-            List<FieldError> errors = bindingResultUser.getFieldErrors();
+        if (newUserBindingResult.hasErrors()) {
+            List<FieldError> errors = newUserBindingResult.getFieldErrors();
             for (FieldError error : errors) {
                 System.out.println(error.getField() + " - " + error.getDefaultMessage());
             }
             return "admin/user/create";
         }
         String avatar = this.uploadFileService.handleUploadFile(file, "avatar");
+        if (avatar.equals("")) {
+            avatar = "default-avatar.jpg";
+        }
         String hashPassword = this.passwordEncoder.encode(newUser.getPassword());
         newUser.setRole(this.userService.getRoleByName(newUser.getRole().getName()));
         newUser.setAvatar(avatar);

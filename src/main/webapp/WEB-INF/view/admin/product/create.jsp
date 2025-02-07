@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+    <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
       <!DOCTYPE html>
       <html lang="en">
 
@@ -47,27 +48,41 @@
                   <hr />
                   <form:form action="/admin/product/create" method="post" modelAttribute="newProduct" class="row"
                     enctype="multipart/form-data">
+                    <spring:bind path="name">
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Name: </label>
-                      <form:input type="text" path="name" class="form-control" />
-
+                      <form:input type="text" path="name" class="form-control ${status.error?'is-invalid':''}" />
+                      <form:errors path = "name" cssClass = "invalid-feedback"/>
                     </div>
+                  </spring:bind>
+                  <spring:bind path="price">
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Price: </label>
-                      <form:input type="number" path="price" class="form-control" />
+                      <form:input type="number" path="price" class="form-control ${status.error?'is-invalid':''}" />
+                      <form:errors path = "price" cssClass = "invalid-feedback"/>
                     </div>
+                  </spring:bind>
+                  <spring:bind path="detailDesc">
                     <div class="mb-3 col-12 ">
                       <label class="form-label">Detail description: </label>
-                      <textarea class="form-control" path="detailDesc" rows="3"></textarea>
+                      <form:textarea class="form-control ${status.error?'is-invalid':''}" path="detailDesc" rows="3"></form:textarea>
+                      <form:errors path="detailDesc" cssClass="invalid-feedback"/>
                     </div>
+                  </spring:bind>
+                  <spring:bind path = "shortDesc">
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Short description: </label>
-                      <form:input type="text" path="shortDesc" class="form-control" />
+                      <form:input type="text" path="shortDesc" class="form-control ${status.error?'is-invalid':''}" />
+                      <form:errors path="shortDesc" cssClass="invalid-feedback"/>
                     </div>
+                  </spring:bind>
+                  <spring:bind path="quantity">
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Quantity: </label>
-                      <form:input type="number" placeholder="0" path="quantity" class="form-control" />
+                      <form:input type="number" placeholder="0" path="quantity" class="form-control ${status.error?'is-invalid':''}" />
+                      <form:errors path = "quantity" cssClass="invalid-feedback"/>
                     </div>
+                  </spring:bind>
                     <div class="mb-3 col-12 col-md-6">
                       <label class="form-label">Factory: </label>
                       <form:select class="form-select" aria-label="Default select example" path="factory">

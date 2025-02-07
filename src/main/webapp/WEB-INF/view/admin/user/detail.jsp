@@ -32,6 +32,9 @@
                 <div class="col-6 mx-auto">
                 <h2>Detail user with id = ${user.id}</h2>
               <hr />
+              <c:if test="${user.avatar!=null && user.avatar!=''}"> 
+                <div class="mb-3"><img src="/images/avatar/${user.avatar}" style="width: 50%;"></div>
+               </c:if>
               <div class="card" style="width: 60%;">
                 <div class="card-header">
                   User information
