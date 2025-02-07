@@ -63,10 +63,47 @@ public class ProductController {
     }
     @RequestMapping("/admin/product/{id}")
     public String getViewProductPage(@PathVariable long id, Model model){
-         Product product = this.productService.getProductBydId(id);
+         Product product = this.productService.getProductById(id);
          model.addAttribute("product", product);
          return "admin/product/detail";
     }
+    @RequestMapping("/admin/product/update/{id}")
+    public String getUpdateProductPage(@PathVariable long id, Model model)
+    {
+        Product product = this.productService.getProductById(id);
+        model.addAttribute("updateProduct", product);
+        return "admin/product/update";
+
+    }
+    @PostMapping("/admin/product/update")
+    public String postUpdateProduct(
+        Model model, 
+        @ModelAttribute("updateProduct") @Valid Product updateProduct, 
+        BindingResult updateProductBindingResult,
+        @RequestParam("productFile") MultipartFile file
+        ){
+            if(updateProductBindingResult.hasErrors())
+            {
+                List<FieldError> errors = updateProductBindingResult.getFieldErrors();
+                for(FieldError error : errors )
+                {
+                    System.out.println(error.getField() + " - " + error.getDefaultMessage());
+                }
+                return "admin/product/update";
+            }
+            String image = this.uploadFileService.handleUploadFile(file, "product");
+            Product product = this.productService.getProductById(updateProduct.getId());
+            product.setName(updateProduct.getName());
+            product.setPrice(updateProduct.getPrice());
+            product.setImage(image);
+            product.setDetailDesc(updateProduct.getDetailDesc());
+            product.setShortDesc(updateProduct.getShortDesc());
+            product.setQuantity(updateProduct.getQuantity());
+            product.setFactory(updateProduct.getFactory()); 
+            this.productService.handleSaveProduct(product);
+            return "redirect:/admin/product";
+
+        }
     
     
 }
