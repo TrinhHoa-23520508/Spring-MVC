@@ -21,9 +21,16 @@
         <script>
           $(document).ready(() => {
             const productFile = $("#productFile");
+            const orgImage = "${updateProduct.image}"
+            if(orgImage){
+                const orgImageURL = "/images/product/"+orgImage;
+                $("#productPreview").attr("src", orgImageURL);
+                $("#productPreview").css({"display": "block"})
+            }
             productFile.change(function (e) {
               const imgURL = URL.createObjectURL(e.target.files[0]);
               $("#productPreview").attr("src", imgURL);
+              $("#productPreview").css({"display": "block"})
               
             });
           }); 
@@ -113,11 +120,11 @@
 
                     </div>
                     <div class="mb-3 col-12">
-                      <img style="max-height: 250px; display:block;" alt="product preview" id="productPreview" src ="/images/product/${updateProduct.image}" />
+                      <img style="max-height: 250px; display:none;" alt="product preview" id="productPreview"/>
 
                     </div>
                     <div class="mb-5 col-12">
-                      <button type="submit" class="btn btn-primary">Create</button>
+                      <button type="submit" class="btn btn-warning">Update</button>
                     </div>
 
 
