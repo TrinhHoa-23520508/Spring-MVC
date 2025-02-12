@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+        <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
             <!DOCTYPE html>
             <html lang="en">
 
@@ -47,18 +48,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="form-floating mb-3">
-                                                        <form:input class="form-control" type="email"
-                                                            placeholder="name@example.com" path="email" />
-                                                        <label>Email address</label>
+                                                        <spring:bind path="email">
+                                                            <form:input class="form-control ${status.error ? 'is-invalid' : ''}" 
+                                                                type="email" placeholder="name@example.com" path="email" />
+                                                            <label>Email address</label>
+                                                            <form:errors path="email" cssClass="invalid-feedback" />
+                                                        </spring:bind>
                                                     </div>
+                                                    
+                                                
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
+                                                            <spring:bind path="confirmPassword">
                                                             <div class="form-floating mb-3 mb-md-0">
-                                                                <form:input class="form-control" type="password"
+                                                                <form:input class="form-control ${status.error?'is-invalid':''}" type="password"
                                                                     placeholder="Create a password" path="password" />
                                                                 <label>Password</label>
+                                                                <form:errors path="confirmPassword" cssClass="invalid-feedback"/>
                                                             </div>
+                                                        </spring:bind>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating mb-3 mb-md-0">
