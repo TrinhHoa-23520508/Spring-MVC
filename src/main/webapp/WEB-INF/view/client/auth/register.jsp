@@ -32,12 +32,15 @@
                                                     modelAttribute="registerUser">
                                                     <div class="row mb-3">
                                                         <div class="col-md-6">
+                                                            <spring:bind path="firstName">
                                                             <div class="form-floating mb-3 mb-md-0">
-                                                                <form:input class="form-control" type="text"
+                                                                <form:input class="form-control ${status.error?'is-invalid':''}" type="text"
                                                                     placeholder="Enter your first name"
                                                                     path="firstName" />
                                                                 <label for="inputFirstName">First name</label>
+                                                                <form:errors path="firstName" cssClass="invalid-feedback"/>
                                                             </div>
+                                                        </spring:bind>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-floating">

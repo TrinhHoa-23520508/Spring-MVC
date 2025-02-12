@@ -23,7 +23,7 @@ public class UserService {
         return this.userRepository.findAll();
     }
     public List<User> getAllUsersByEmail(String email){
-        return this.userRepository.findByEmail(email);
+        return this.userRepository.findOneByEmail(email);
     }
     public User handleSaveUser(User newUser) {
         User eric = this.userRepository.save(newUser);
@@ -49,5 +49,8 @@ public class UserService {
     }
     public boolean checkExistEmail(String email){
         return this.userRepository.existsByEmail(email);
+    }
+    public User getUserByEmail(String email){
+        return this.userRepository.findByEmail(email);
     }
 }
