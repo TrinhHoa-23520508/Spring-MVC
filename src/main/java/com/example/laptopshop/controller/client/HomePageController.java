@@ -60,8 +60,8 @@ public class HomePageController {
         return "redirect:/login" ;
     }
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        model.addAttribute("loginUser", new RegisterDTO());
+    public String getLoginPage() {
+       
         return "client/auth/login";
     }
     
