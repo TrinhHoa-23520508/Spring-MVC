@@ -68,7 +68,7 @@ public class SecurityConfiguration {
                         .failureUrl("/login?error")
                         .successHandler(customSuccessHandler())
                         .permitAll());
-
+              
         return http.build();
     }
 
