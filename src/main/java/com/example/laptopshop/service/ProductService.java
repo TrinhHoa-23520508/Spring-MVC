@@ -12,6 +12,8 @@ import com.example.laptopshop.repository.CartDetailRepository;
 import com.example.laptopshop.repository.CartRepository;
 import com.example.laptopshop.repository.ProductRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
@@ -34,7 +36,7 @@ public class ProductService {
     public void handleDeleteProduct(long id){
         this.productRepository.deleteById(id);
     }
-    public void handleAddProductToCart(long product_id, User user) {
+    public void handleAddProductToCart(long product_id, User user, HttpSession session) {
         if (user == null) {
             return;
         }
@@ -45,13 +47,10 @@ public class ProductService {
             cart = new Cart();
             cart.setUser(user);
             //temp
-            cart.setSum(1);
+            cart.setSum(0);
             this.cartRepository.save(cart); 
         }
-        else{
-            //temp
-            cart.setSum(cart.getSum()+1);
-        }
+       
     
   
         Product product = this.getProductById(product_id);
@@ -68,6 +67,8 @@ public class ProductService {
             cartDetail.setProduct(product);
             cartDetail.setQuantity(1);
             cartDetail.setPrice(product.getPrice());
+            cart.setSum(cart.getSum()+1 );
+            session.setAttribute("sum", cart.getSum());
         } else {
          
             cartDetail.setQuantity(cartDetail.getQuantity() + 1);
@@ -75,7 +76,7 @@ public class ProductService {
         }
    
         this.cartDetailRepository.save(cartDetail);
-    
+       
       
         
         this.cartRepository.save(cart);

@@ -41,8 +41,13 @@ public class ItemController {
         HttpSession session = request.getSession();
         long user_id = (long) session.getAttribute("id");
         User user = this.userService.getUserById(user_id);
-        this.productService.handleAddProductToCart(id, user);
+        this.productService.handleAddProductToCart(id, user, session);
         return "redirect:/";
     }
+    @GetMapping("/cart")
+    public String getCartPage(Model model){
+        return "client/cart/show";
+    }
+    
 
 }

@@ -14,6 +14,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.example.laptopshop.domain.Cart;
 import com.example.laptopshop.domain.User;
 import com.example.laptopshop.service.UserService;
 
@@ -21,11 +22,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import com.example.laptopshop.repository.CartRepository;
 
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
-    
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    CartRepository cartRepository;
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -54,12 +58,20 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = this.userService.getUserByEmail(email);
-        if(user!=null)
-        {
+        if (user != null) {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
             session.setAttribute("id", user.getId());
             session.setAttribute("email", user.getEmail());
+
+            Cart cart = this.cartRepository.findCartByUser(user);
+            if (cart != null) {
+                long sum = cart.getSum();
+                session.setAttribute("sum", sum);
+            } else {
+                session.setAttribute("sum", 0);
+            }
+
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
@@ -73,7 +85,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         }
         redirectStrategy.sendRedirect(request, response, targetUrl);
         clearAuthenticationAttributes(request, authentication);
-        
+
     }
 
 }
