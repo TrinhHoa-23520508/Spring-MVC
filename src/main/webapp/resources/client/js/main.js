@@ -132,19 +132,47 @@
 
 
     // Product Quantity
-    $('.quantity button').on('click', function () {
-        var button = $(this);
-        var oldValue = button.parent().parent().find('input').val();
-        if (button.hasClass('btn-plus')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
-            }
+    // $('.quantity button').on('click', function () {
+    //     var button = $(this);
+    //     var oldValue = button.parent().parent().find('input').val();
+    //     if (button.hasClass('btn-plus')) {
+    //         var newVal = parseFloat(oldValue) + 1;
+    //     } else {
+    //         if (oldValue > 0) {
+    //             var newVal = parseFloat(oldValue) - 1;
+    //         } else {
+    //             newVal = 0;
+    //         }
+    //     }
+    //     button.parent().parent().find('input').val(newVal);
+    // });
+    function updateCartTotal() {
+        let total = 0;
+        $("tbody tr").each(function () {
+            let quantity = parseInt($(this).find(".quantity input").val());
+            let price = parseFloat($(this).find("td:nth-child(3) p").text().replace(" đ", "").replace(/,/g, ""));
+            let totalPrice = quantity * price;
+            $(this).find("td:nth-child(5) p").text(totalPrice.toLocaleString() + " đ");
+            total += totalPrice;
+        });
+        $(".bg-light .d-flex p").first().text(total.toLocaleString() + " đ");
+        $(".py-4 p").last().text(total.toLocaleString() + " đ");
+    }
+
+    $(".btn-plus").click(function () {
+        let input = $(this).closest(".quantity").find("input");
+        let value = parseInt(input.val());
+        input.val(value + 1);
+        updateCartTotal();
+    });
+
+    $(".btn-minus").click(function () {
+        let input = $(this).closest(".quantity").find("input");
+        let value = parseInt(input.val());
+        if (value > 1) {
+            input.val(value - 1);
+            updateCartTotal();
         }
-        button.parent().parent().find('input').val(newVal);
     });
 
 })(jQuery);
