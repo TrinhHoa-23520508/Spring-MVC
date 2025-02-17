@@ -1,12 +1,14 @@
 package com.example.laptopshop.controller.client;
 
 import java.net.http.HttpRequest;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.laptopshop.domain.CartDetail;
 import com.example.laptopshop.domain.Product;
 import com.example.laptopshop.domain.User;
 import com.example.laptopshop.service.ProductService;
@@ -45,7 +47,18 @@ public class ItemController {
         return "redirect:/";
     }
     @GetMapping("/cart")
-    public String getCartPage(Model model){
+    public String getCartPage(Model model , HttpServletRequest request){
+        //get session
+        HttpSession session = request.getSession();
+        long user_id = (long) session.getAttribute("id");
+        User user = this.userService.getUserById(user_id);
+        List<CartDetail> cartDetails = this.productService.getAllCartDetails(user);
+        double totalPrice = 0;
+        for(CartDetail cartDetail : cartDetails){
+              totalPrice += cartDetail.getPrice()*cartDetail.getQuantity();
+        }
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
         return "client/cart/show";
     }
     

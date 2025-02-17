@@ -1,5 +1,7 @@
 package com.example.laptopshop.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.laptopshop.domain.Cart;
@@ -9,4 +11,5 @@ import com.example.laptopshop.domain.Product;
 public interface CartDetailRepository extends JpaRepository<CartDetail, Long>{
     CartDetail findByCartAndProduct(Cart cart, Product product);
     CartDetail save(CartDetail cartDetail);
+    List<CartDetail> findAllByCart(Cart cart);
 }

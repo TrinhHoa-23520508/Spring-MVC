@@ -72,7 +72,7 @@ public class ProductService {
         } else {
          
             cartDetail.setQuantity(cartDetail.getQuantity() + 1);
-            cartDetail.setPrice(cartDetail.getPrice() + product.getPrice());
+            
         }
    
         this.cartDetailRepository.save(cartDetail);
@@ -80,6 +80,18 @@ public class ProductService {
       
         
         this.cartRepository.save(cart);
+    }
+    public List<CartDetail> getAllCartDetails(User user){
+        Cart cart = this.cartRepository.findCartByUser(user);
+        if(cart == null){
+            cart = new Cart();
+            cart.setUser(user);
+            cart.setSum(0);
+            this.cartRepository.save(cart);
+            
+        }
+        return this.cartDetailRepository.findAllByCart(cart);
+      
     }
     
     
